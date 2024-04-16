@@ -7,7 +7,7 @@
 
 # Auth & User
 
-**Login**
+## Login
 
 API Endpoint: /api/login
 
@@ -20,7 +20,7 @@ email: User's email address.
 password: User's password.
 
 
-**Register**
+## Register
 
 API Endpoint: /api/register
 
@@ -33,7 +33,7 @@ email: User's email address.
 password: User's password.
 
 
-**Get All Users**
+## Get All Users
 
 API Endpoint: /api/getAllUsers
 
@@ -46,7 +46,7 @@ API Endpoint: /api/getAllUsersDetails
 Method: GET
 
 
-**Get Users Details By ID**
+## Get Users Details By ID
 
 API Endpoint: /api/getUsersDetailsById
 
@@ -57,7 +57,7 @@ Body -->
 id: User's ID.
 
 
-**Get Users Details By Email**
+## Get Users Details By Email
 
 API Endpoint: /api/getUsersDetailsByEmail
 
@@ -68,16 +68,17 @@ Body -->
 email: User's email address.
 
 
-**Get My Details**
+## Get My Details
 
 API Endpoint: /api/getMyDetails
 
 Method: GET
 
+
 # Blog Endpoints
 
 
-**Create Blog**
+## Create Blog
 
 API Endpoint: /api/create
 
@@ -90,7 +91,7 @@ title: Title of the blog.
 content: Content of the blog.
 
 
-**Delete Blog**
+## Delete Blog
 
 API Endpoint: /api/delete
 
@@ -101,7 +102,7 @@ Body -->
 id: ID of the blog to delete.
 
 
-**Like on Blog**
+## Like on Blog
 
 API Endpoint: /api/like
 
@@ -112,7 +113,7 @@ Body -->
 blogid: ID of the blog to like.
 
 
-**Comment on Blog**
+## Comment on Blog
 
 API Endpoint: /api/comment
 
@@ -125,14 +126,14 @@ blogid: ID of the blog to comment on.
 comment: Comment text.
 
 
-**Get All Blogs**
+## Get All Blogs
 
 API Endpoint: /api/getAllBlogs
 
 Method: GET
 
 
-**Get All Blogs By User ID**
+## Get All Blogs By User ID
 
 API Endpoint: /api/getAllBlogsByUserId
 
@@ -143,7 +144,7 @@ Body -->
 id: User's ID.
 
 
-**Get Blog Details By ID**
+## Get Blog Details By ID
 
 API Endpoint: /api/getBlogDetailsById
 
@@ -154,7 +155,7 @@ Body -->
 blogid: ID of the blog.
 
 
-**Get All Likes By Blog ID**
+## Get All Likes By Blog ID
 
 API Endpoint: /api/getAllLikesByBlogId
 
@@ -165,7 +166,7 @@ Body -->
 blogid: ID of the blog.
 
 
-**Get All Comments By Blog ID**
+## Get All Comments By Blog ID
 
 API Endpoint: /api/getAllCommentsByBlogId
 
