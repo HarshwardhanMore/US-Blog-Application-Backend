@@ -19,6 +19,10 @@ email: User's email address.
 
 password: User's password.
 
+**This will return an objection containing the token.
+Use this token in the headers of all APIs except login and register for authentication.
+**
+Add { Authorization: token_given_by_login } in the header of POSTMAN or THUNDER CLIENT to test APIs.
 
 ## Register
 
