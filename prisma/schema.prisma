@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  firstname String?
+  lastname  String?
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  blogs    Blog[]    @relation("createdBy")
+  likes    Like[]    @relation("likedBy")
+  comments Comment[] @relation("commentedBy")
+}
+
+model Blog {
+  id              Int      @id @default(autoincrement())
+  title           String
+  description     String
+  createdByUserId Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  createdByUser User      @relation("createdBy", fields: [createdByUserId], references: [id])
+  likes         Like[]    @relation("likedBlog")
+  comments      Comment[] @relation("commentedOnBlog")
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  blogId    Int
+  userId    Int
+  createdAt DateTime @default(now())
+
+  blog Blog @relation("likedBlog", fields: [blogId], references: [id])
+  user User @relation("likedBy", fields: [userId], references: [id])
+}
+
+model Comment {
+  id                Int      @id @default(autoincrement())
+  blogId            Int
+  comment           String
+  commentedByUserId Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  blog            Blog @relation("commentedOnBlog", fields: [blogId], references: [id])
+  commentedByUser User @relation("commentedBy", fields: [commentedByUserId], references: [id])
+}
