@@ -11,12 +11,12 @@ authRouter.get(
   authenticateUsers,
   authController.getAllUsersDetails
 );
-authRouter.get(
+authRouter.post(
   "/getUsersDetailsById",
   authenticateUsers,
   authController.getUsersDetailsById
 );
-authRouter.get(
+authRouter.post(
   "/getUsersDetailsByEmail",
   authenticateUsers,
   authController.getUsersDetailsByEmail
