@@ -19,6 +19,7 @@ email: User's email address.
 
 password: User's password.
 
+
 **Register**
 
 API Endpoint: /api/register
@@ -30,6 +31,7 @@ Body -->
 email: User's email address.
 
 password: User's password.
+
 
 **Get All Users**
 
@@ -43,6 +45,7 @@ API Endpoint: /api/getAllUsersDetails
 
 Method: GET
 
+
 **Get Users Details By ID**
 
 API Endpoint: /api/getUsersDetailsById
@@ -52,6 +55,7 @@ Method: POST
 Body -->
 
 id: User's ID.
+
 
 **Get Users Details By Email**
 
@@ -63,6 +67,7 @@ Body -->
 
 email: User's email address.
 
+
 **Get My Details**
 
 API Endpoint: /api/getMyDetails
@@ -70,6 +75,7 @@ API Endpoint: /api/getMyDetails
 Method: GET
 
 # Blog Endpoints
+
 
 **Create Blog**
 
@@ -83,6 +89,7 @@ title: Title of the blog.
 
 content: Content of the blog.
 
+
 **Delete Blog**
 
 API Endpoint: /api/delete
@@ -93,6 +100,7 @@ Body -->
 
 id: ID of the blog to delete.
 
+
 **Like on Blog**
 
 API Endpoint: /api/like
@@ -102,6 +110,7 @@ Method: POST
 Body -->
 
 blogid: ID of the blog to like.
+
 
 **Comment on Blog**
 
@@ -115,11 +124,13 @@ blogid: ID of the blog to comment on.
 
 comment: Comment text.
 
+
 **Get All Blogs**
 
 API Endpoint: /api/getAllBlogs
 
 Method: GET
+
 
 **Get All Blogs By User ID**
 
@@ -131,6 +142,7 @@ Body -->
 
 id: User's ID.
 
+
 **Get Blog Details By ID**
 
 API Endpoint: /api/getBlogDetailsById
@@ -141,6 +153,7 @@ Body -->
 
 blogid: ID of the blog.
 
+
 **Get All Likes By Blog ID**
 
 API Endpoint: /api/getAllLikesByBlogId
@@ -150,6 +163,7 @@ Method: POST
 Body -->
 
 blogid: ID of the blog.
+
 
 **Get All Comments By Blog ID**
 
