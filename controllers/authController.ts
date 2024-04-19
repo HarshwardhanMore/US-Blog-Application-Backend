@@ -210,3 +210,32 @@ exports.getMyDetails = async (req: any, res: any) => {
     });
   }
 };
+exports.getMyActivity = async (req: any, res: any) => {
+  try {
+    const id = req.user.id;
+    const dataToSend = await authService.getMyActivity(id);
+    if (dataToSend != null) {
+      res.json({
+        status: 200,
+        error: false,
+        message: "User Activity Found!",
+        data: dataToSend,
+      });
+    } else {
+      res.json({
+        status: 200,
+        error: true,
+        message: "Unable to find user activity!",
+        data: dataToSend,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.json({
+      status: 500,
+      error: true,
+      message: "Internal server error!",
+      data: "",
+    });
+  }
+};

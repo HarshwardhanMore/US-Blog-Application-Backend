@@ -22,5 +22,6 @@ authRouter.post(
   authController.getUsersDetailsByEmail
 );
 authRouter.get("/getMyDetails", authenticateUsers, authController.getMyDetails);
+authRouter.get("/getMyActivity", authenticateUsers, authController.getMyActivity);
 
 module.exports = authRouter;

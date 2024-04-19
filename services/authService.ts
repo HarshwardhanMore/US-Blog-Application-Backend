@@ -20,10 +20,16 @@ async function compareIt(password: any, hashedPassword: any) {
 
 function generateJwtToken(user: any) {
   const id = user.id;
+  const email = user.email;
+  const firstname = user.firstname;
+  const lastname = user.lastname;
   const expiresIn = "1h";
   const payload = {
     id: id,
-    iat: Date.now(),
+    email: email,
+    firstname: firstname,
+    lastname: lastname,
+    date: Date.now(),
   };
   const signedToken = jwt.sign(payload, config.JWT_SECRET, {
     expiresIn: expiresIn,
@@ -222,6 +228,22 @@ exports.getMyDetails = async (id: any) => {
             commentedByUser: true,
           },
         },
+      },
+    });
+    return userDetails;
+  } catch (error: any) {
+    throw new Error("Error : " + error.message);
+  }
+};
+exports.getMyActivity = async (id: any) => {
+  try {
+    const userDetails = await prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+      include: {
+        likes: true,
+        comments: true,
       },
     });
     return userDetails;

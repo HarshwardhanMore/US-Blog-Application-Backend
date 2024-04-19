@@ -78,7 +78,7 @@ exports.likeOnBlog = async (req: any, res: any) => {
       res.json({
         status: 200,
         error: true,
-        message: "You already liked this blog!",
+        message: "Blog disliked successfully!",
         data: dataToSend,
       });
     }
@@ -158,8 +158,10 @@ exports.getAllBlogs = async (req: any, res: any) => {
 };
 exports.getBlogDetailsById = async (req: any, res: any) => {
   try {
-    const blogId = req.body?.blogid;
-    const dataToSend = await blogService.getBlogDetailsById(blogId);
+    const data = req.body;
+    console.log("data :::::::::::::::: ", data);
+
+    const dataToSend = await blogService.getBlogDetailsById(parseInt(data?.blogid));
     if (dataToSend != null) {
       res.json({
         status: 200,

@@ -31,6 +31,11 @@ exports.likeOnBlog = async (data: any) => {
       where: data,
     });
     if (likedBlogData != null) {
+      await prisma.like.delete({
+        where: {
+          id: likedBlogData.id,
+        },
+      });
       return false;
     }
     await prisma.like.create({
@@ -88,6 +93,7 @@ exports.getBlogDetailsById = async (id: any) => {
         id: id,
       },
       include: {
+        createdByUser: true,
         likes: {
           include: {
             user: true,
@@ -100,6 +106,7 @@ exports.getBlogDetailsById = async (id: any) => {
         },
       },
     });
+    console.log(data);
     return {
       ...data,
       totalLikes: data?.likes.length,
@@ -128,7 +135,7 @@ exports.getAllBlogsByUserId = async (userid: any) => {
         },
       },
     });
-    
+
     const blogsWithCounts = data.map((blog) => {
       const countOfLikes = blog.likes.length;
       const countOfComments = blog.comments.length;
