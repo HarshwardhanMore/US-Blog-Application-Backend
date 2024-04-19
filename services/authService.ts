@@ -1,10 +1,12 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const config = require("../config");
+
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const JWT_SECRET = "us-harshwardhanmore";
+// const JWT_SECRET = "us-harshwardhanmore";
 
 async function hashIt(password: any) {
   const salt = await bcrypt.genSalt(6);
@@ -18,12 +20,12 @@ async function compareIt(password: any, hashedPassword: any) {
 
 function generateJwtToken(user: any) {
   const id = user.id;
-  const expiresIn = "12h";
+  const expiresIn = "1h";
   const payload = {
     id: id,
     iat: Date.now(),
   };
-  const signedToken = jwt.sign(payload, JWT_SECRET, {
+  const signedToken = jwt.sign(payload, config.JWT_SECRET, {
     expiresIn: expiresIn,
   });
   return signedToken;
@@ -41,7 +43,8 @@ exports.login = async (data: any) => {
         data?.password,
         existingUser?.password
       );
-      if (isPasswordSame) return { token: generateJwtToken(existingUser) };
+      if (isPasswordSame)
+        return { ...existingUser, token: generateJwtToken(existingUser) };
       // Return the result of generateJwtToken
       else return null;
     }
@@ -207,8 +210,18 @@ exports.getMyDetails = async (id: any) => {
             },
           },
         },
-        likes: true,
-        comments: true,
+        likes: {
+          include: {
+            blog: true,
+            user: true,
+          },
+        },
+        comments: {
+          include: {
+            blog: true,
+            commentedByUser: true,
+          },
+        },
       },
     });
     return userDetails;

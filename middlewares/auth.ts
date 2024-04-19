@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
+const config = require("../config");
 
-const JWT_SECRET = "us-harshwardhanmore";
+// const JWT_SECRET = "us-harshwardhanmore";
 
 const authenticateUser = (req: any, res: any, next: any) => {
   let token = req.header("Authorization") || req.query.token;
@@ -16,7 +17,7 @@ const authenticateUser = (req: any, res: any, next: any) => {
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, config.JWT_SECRET);
 
     req.user = decoded;
 

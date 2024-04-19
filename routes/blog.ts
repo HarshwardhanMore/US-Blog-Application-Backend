@@ -29,5 +29,15 @@ blogRouter.post(
   authenticate,
   blogController.getAllCommentsByBlogId
 );
+blogRouter.post(
+  "/getTotalLikesByBlogId",
+  authenticate,
+  blogController.getTotalLikesByBlogId
+);
+blogRouter.get(
+  "/getMyBlogs",
+  authenticate,
+  blogController.getMyBlogs
+);
 
 module.exports = blogRouter;

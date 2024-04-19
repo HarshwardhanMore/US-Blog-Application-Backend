@@ -131,7 +131,7 @@ exports.commentOnBlog = async (req: any, res: any) => {
 exports.getAllBlogs = async (req: any, res: any) => {
   try {
     const dataToSend = await blogService.getAllBlogs();
-    if (dataToSend === true) {
+    if (dataToSend != null) {
       res.json({
         status: 200,
         error: false,
@@ -259,6 +259,66 @@ exports.getAllCommentsByBlogId = async (req: any, res: any) => {
         status: 200,
         error: true,
         message: "Unable to fetch blogs!",
+        data: dataToSend,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.json({
+      status: 500,
+      error: true,
+      message: "Internal server error!",
+      data: "",
+    });
+  }
+};
+
+exports.getTotalLikesByBlogId = async (req: any, res: any) => {
+  try {
+    const blogid = req.body?.blogid;
+    const dataToSend = await blogService.getTotalLikesByBlogId(blogid);
+    if (dataToSend != null) {
+      res.json({
+        status: 200,
+        error: false,
+        message: "Likes count fetched successfully!",
+        data: dataToSend,
+      });
+    } else {
+      res.json({
+        status: 200,
+        error: true,
+        message: "Unable to fetch likes count!",
+        data: dataToSend,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.json({
+      status: 500,
+      error: true,
+      message: "Internal server error!",
+      data: "",
+    });
+  }
+};
+exports.getMyBlogs = async (req: any, res: any) => {
+  try {
+    const userid = req.user?.id;
+    console.log("userid : ", userid);
+    const dataToSend = await blogService.getAllBlogsByUserId(userid);
+    if (dataToSend != null) {
+      res.json({
+        status: 200,
+        error: false,
+        message: "Blogs data fetched successfully!",
+        data: dataToSend,
+      });
+    } else {
+      res.json({
+        status: 200,
+        error: true,
+        message: "Unable to fetch blogs data!",
         data: dataToSend,
       });
     }

@@ -2,6 +2,16 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+exports.create = async (data: any) => {
+  try {
+    const newBlog = await prisma.blog.create({
+      data: data,
+    });
+    return newBlog;
+  } catch (error: any) {
+    throw new Error("Error : " + error.message);
+  }
+};
 exports.delete = async (id: any) => {
   try {
     await prisma.blog.delete({
@@ -23,7 +33,7 @@ exports.likeOnBlog = async (data: any) => {
     if (likedBlogData != null) {
       return false;
     }
-    const likedBlog = await prisma.like.create({
+    await prisma.like.create({
       data: data,
     });
     return true;
@@ -34,10 +44,10 @@ exports.likeOnBlog = async (data: any) => {
 
 exports.commentOnBlog = async (data: any) => {
   try {
-    const commentedBlog = await prisma.comment.create({
+    await prisma.comment.create({
       data: data,
     });
-    return commentedBlog;
+    return true;
   } catch (error: any) {
     throw new Error("Error : " + error.message);
   }
@@ -45,8 +55,28 @@ exports.commentOnBlog = async (data: any) => {
 
 exports.getAllBlogs = async () => {
   try {
-    const data = await prisma.blog.findMany();
-    return data;
+    const data = await prisma.blog.findMany({
+      include: {
+        createdByUser: true,
+        likes: true,
+        comments: {
+          include: {
+            commentedByUser: true,
+          },
+        },
+      },
+    });
+    const blogsWithCounts = data.map((blog) => {
+      const countOfLikes = blog.likes.length;
+      const countOfComments = blog.comments.length;
+
+      return {
+        ...blog,
+        countOfLikes,
+        countOfComments,
+      };
+    });
+    return blogsWithCounts;
   } catch (error: any) {
     throw new Error("Error : " + error.message);
   }
@@ -70,19 +100,46 @@ exports.getBlogDetailsById = async (id: any) => {
         },
       },
     });
-    return data;
+    return {
+      ...data,
+      totalLikes: data?.likes.length,
+      totalComments: data?.comments.length,
+    };
   } catch (error: any) {
     throw new Error("Error : " + error.message);
   }
 };
 exports.getAllBlogsByUserId = async (userid: any) => {
   try {
-    const data = await prisma.blog.findFirst({
+    const data = await prisma.blog.findMany({
       where: {
         createdByUserId: userid,
       },
+      include: {
+        likes: {
+          include: {
+            user: true,
+          },
+        },
+        comments: {
+          include: {
+            commentedByUser: true,
+          },
+        },
+      },
     });
-    return data;
+    
+    const blogsWithCounts = data.map((blog) => {
+      const countOfLikes = blog.likes.length;
+      const countOfComments = blog.comments.length;
+
+      return {
+        ...blog,
+        countOfLikes,
+        countOfComments,
+      };
+    });
+    return blogsWithCounts;
   } catch (error: any) {
     throw new Error("Error : " + error.message);
   }
@@ -113,6 +170,21 @@ exports.getAllCommentsByBlogId = async (blogid: any) => {
       },
     });
     return data;
+  } catch (error: any) {
+    throw new Error("Error : " + error.message);
+  }
+};
+exports.getTotalLikesByBlogId = async (blogid: any) => {
+  try {
+    const data = await prisma.blog.findFirst({
+      where: {
+        id: blogid,
+      },
+      include: {
+        likes: true,
+      },
+    });
+    return { blogId: data?.id, count: data?.likes.length };
   } catch (error: any) {
     throw new Error("Error : " + error.message);
   }
