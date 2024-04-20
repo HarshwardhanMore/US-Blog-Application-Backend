@@ -14,6 +14,16 @@ exports.create = async (data: any) => {
 };
 exports.delete = async (id: any) => {
   try {
+    await prisma.like.deleteMany({
+      where: {
+        blogId: id,
+      },
+    });
+    await prisma.comment.deleteMany({
+      where: {
+        blogId: id,
+      },
+    });
     await prisma.blog.delete({
       where: {
         id: id,
